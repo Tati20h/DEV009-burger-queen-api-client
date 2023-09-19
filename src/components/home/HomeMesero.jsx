@@ -1,7 +1,6 @@
 import React from 'react'
 
-export const Home = () => {
-
+export const HomeMesero = () => {
   return (
     <div className='containe'>
       <h1>Pedido</h1>
@@ -41,7 +40,7 @@ export const Home = () => {
           <div>$15.000
           </div>
           <div>
-          <input type="submit" className="btn" value="Agregar" />
+            <input type="submit" className="btn" value="Agregar" />
           </div>
 
         </section>

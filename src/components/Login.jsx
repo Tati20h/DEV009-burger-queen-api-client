@@ -1,6 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TEInput } from "tw-elements-react";
 import background from '../assets/img/background.png'
 import { loginUser } from '../server/server';
 import { useState } from 'react'
@@ -9,96 +8,82 @@ import { useState } from 'react'
 // evento useState
 
 export const Login = () => {
-  // contruye navigate
   const navigate = useNavigate();
-  const [form, setForm] = useState({})
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  const changed = ({ target }) => {
-    const { name, value } = target;
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-    setForm({
-      ...form,
-      [name]: value
-    })
-  }
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
-  const logUser = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let user = form;
+    const user = { email, password };
 
     try {
-      const token = await loginUser(user.email, user.password)
-      console.log(token)
-
-      alert("Ingreso Exitoso")
-      navigate('/home')
-
+      const token = await loginUser(user.email, user.password);
+      console.log(token);
+      setError(null);
+      alert("Ingreso Exitoso");
+      if (token.user.role == "admin") {
+        navigate('/home-admin');
+      } else {
+        navigate('/home-mesero');
+      }
     } catch (error) {
-      alert("Hubo un problema al ingresar " + error)
+      setError("Hubo un problema al ingresar " + error);
     }
-  }
+  };
 
   return (
-    <section className="h-screen">
-      <div className="h-full">
-        {/* <!-- Left column container with background--> */}
-        <div className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-
-          <div className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-            <img
-
-              src={background}
-              className="w-613 h-834 transform rotate-89.504 flex-shrink-0"
-              alt="Sample image"
-            />
-
-          </div>
-
-
-          {/* <!-- Right column container --> */}
-          <div className="mb-12 md:mb-0 md:w-8/12 lg:w-5/12 xl:w-5/12">
-            <form onSubmit={logUser}>
-              <h1>BURGER QUEEN</h1>
-              <h1>Bienvenid@s</h1>
-              {/* <!--Sign in section--> */}
-
-              {/* <!-- Separator between social media sign in and email/password sign in --> */}
-              <div className="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-                <p className="mx-4 mb-0 text-center font-semibold dark:text-white">
-                  Or
-                </p>
-              </div>
-
-              {/* <!-- Email input --> */}
-              <TEInput
+    <section className='container'>
+      <section className='transition-div'>
+        <div className="background-image"></div>
+      </section>
+      <section className='forms-container'>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div className='transition-header'>
+              <h1 className='title'>BURGER QUEEN</h1>
+            </div>
+            <h1 className='subtitle'> Bienvenid@s</h1>
+            <div>
+              <h3 className='subtitle'>Inicia Sesion con tu usuario asignado</h3>
+            </div>
+            <div>
+              <input
+                className='input-field'
                 type="email"
                 label="Ingresar Email"
                 size="lg"
-                className='w-395 h-54 transform rotate-89.5 flex-shrink-0 bg-gray-200'
-                onChange={changed}
-              ></TEInput>
-
-              {/* <!--Password input--> */}
-              <TEInput
+                placeholder='Ingresar Email'
+                value={email}
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div>
+              <input
+                className='input-field'
                 type="password"
-                label="Ingresa tu contraseña"
-                className="mb-6 bg-green-200"
+                label="Ingresa contraseña"
                 size="lg"
-                onChange={changed}
-              ></TEInput>
-
-              <div className="mb-6 flex items-center justify-between bg-gray-200">
-                {/* <!-- Remember me checkbox --> */}
-              </div>
-
-              {/* <!-- Login button --> */}
-              <div className="flex justify-center items-center">
-                <input type="submit" value="Iniciar Sesion" className="bg-yellow-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" />
-              </div>
-            </form>
-          </div>
+                placeholder='Ingresa contraseña'
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </div>
+            <div>
+              <input type="submit" className="btn" value="Iniciar Sesion" />
+            </div>
+          </form>
+          {error && <div className="error-message">{error}</div>}
         </div>
-      </div>
-    </section >
+      </section>
+    </section>
   );
 }

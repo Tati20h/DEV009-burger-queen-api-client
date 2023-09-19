@@ -1,4 +1,4 @@
-const urlDesp = 'https://virtserver.swaggerhub.com/ssinuco/BurgerQueenAPI/2.0.0/login'
+const urlDesp = 'http://127.0.0.1:8080/login'
 
 export const loginUser = (email, password) => new Promise((resolve, reject) => {
   fetch(urlDesp, {
