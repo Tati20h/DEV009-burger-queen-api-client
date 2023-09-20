@@ -26,15 +26,19 @@ export const Login = () => {
     const user = { email, password };
 
     try {
-      const token = await loginUser(user.email, user.password);
-      console.log(token);
+      const userFull = await loginUser(user.email, user.password);
+      localStorage.setItem("user", JSON.stringify(userFull))
       setError(null);
       alert("Ingreso Exitoso");
-      if (token.user.role == "admin") {
-        navigate('/home-admin');
-      } else {
+      if (userFull.user.role == "mesero") {
         navigate('/home-mesero');
+      } else if (userFull.user.role == "chef") {
+        navigate('/home-chef');
+      } else {
+        navigate('/home-admin');
       }
+
+
     } catch (error) {
       setError("Hubo un problema al ingresar " + error);
     }
@@ -44,6 +48,7 @@ export const Login = () => {
     <section className='container'>
       <section className='transition-div'>
         <div className="background-image"></div>
+        <img src={background} alt='backgroud' />
       </section>
       <section className='forms-container'>
         <div>
@@ -51,7 +56,7 @@ export const Login = () => {
             <div className='transition-header'>
               <h1 className='title'>BURGER QUEEN</h1>
             </div>
-            <h1 className='subtitle'> Bienvenid@s</h1>
+            <h2 className='title'> Bienvenid@s</h2>
             <div>
               <h3 className='subtitle'>Inicia Sesion con tu usuario asignado</h3>
             </div>
@@ -77,6 +82,7 @@ export const Login = () => {
                 onChange={handlePasswordChange}
               />
             </div>
+            <br />
             <div>
               <input type="submit" className="btn" value="Iniciar Sesion" />
             </div>
