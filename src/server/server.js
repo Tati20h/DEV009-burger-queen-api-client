@@ -1,5 +1,5 @@
-const urlDesp = 'http://127.0.0.1:8080/login'
-const urlProds = `http://127.0.0.1:8080/products?_page=1&_limit=10`
+const urlDesp = 'https://virtserver.swaggerhub.com/ssinuco/BurgerQueenAPI/2.0.0/login'
+const urlDatabase = `https://tati20h.github.io/burger-queen-api-mock/db.json`
 
 export const loginUser = (email, password) => new Promise((resolve, reject) => {
   fetch(urlDesp, {
@@ -24,12 +24,15 @@ export const loginUser = (email, password) => new Promise((resolve, reject) => {
     });
 });
 
-export const getProduct = (token) => new Promise((resolve, reject) => {
-  fetch(urlProds, {
+export const getDatabase = () => new Promise((resolve, reject) => {
+  fetch(urlDatabase, {
     method: "GET",
-    headers: { "Authorization": `Bearer ${token}` }
+    headers: {
+      'accept': 'application/json'
+    }
   })
     .then(response => response.json())
     .then(json => resolve(json))
     .catch(err => reject(err));
 })
+

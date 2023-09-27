@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import background from '../assets/img/background.png'
-import { loginUser } from '../server/server';
+import { getDatabase, loginUser } from '../server/server';
 import { useState } from 'react'
 
 // useNavigate - navega hacia la url que yo le agrego
@@ -23,21 +23,28 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = { email, password };
-
     try {
-      const userFull = await loginUser(user.email, user.password);
+      const userFull = {}
+
+      const { users } = await getDatabase();
+      users.forEach(user => {
+        if (user.email == email) {
+          alert("Ingreso Exitoso");
+          if (user.role == "mesero") {
+            navigate('/home-mesero');
+          } else if (user.role == "chef") {
+            navigate('/home-chef');
+          } else {
+            navigate('/home-admin');
+          }
+          userFull["user"] = user
+        }
+      });
+
+      const accessToken = await loginUser(email, password)
+      userFull["token"] = accessToken
       localStorage.setItem("user", JSON.stringify(userFull))
       setError(null);
-      alert("Ingreso Exitoso");
-      if (userFull.user.role == "mesero") {
-        navigate('/home-mesero');
-      } else if (userFull.user.role == "chef") {
-        navigate('/home-chef');
-      } else {
-        navigate('/home-admin');
-      }
-
 
     } catch (error) {
       setError("Hubo un problema al ingresar " + error);

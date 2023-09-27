@@ -2,6 +2,7 @@ import { Button } from '@mui/material'
 import React from 'react'
 import SpanningTable from '../componentes-internos/Orden'
 import { useNavigate } from 'react-router-dom'
+import PrimarySearchAppBar from '../componentes-internos/Bar'
 
 export const HomeChef = () => {
   const navigate = useNavigate();
@@ -12,26 +13,21 @@ export const HomeChef = () => {
   }
   return (
     <>
-      <div className='head'>
-        <div>
-          <Button className='btn-exit' type="submit" onClick={closeSesion}>Cerrar Sesión</Button>
-        </div>
-      </div>
+
+    
+      <PrimarySearchAppBar />
+       
+      
       <div className="row">
         <h1>COMANDAS COCINA</h1>
 
-        <input
-          className="input-field"
-          type="search"
-          placeholder="Buscar...!" >
-
-        </input>
+     
         <section className='tablas'>
 
-          <div >
+    
             <SpanningTable />
             <input className='btn' type="submit" value='Sale orden' />
-          </div>
+     
 
         </section>
 

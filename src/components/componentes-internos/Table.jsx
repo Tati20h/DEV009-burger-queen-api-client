@@ -21,31 +21,31 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { getProduct } from '../../server/server';
-import { useState } from 'react';
+import { getDatabase } from '../../server/server';
 
-function createData(name, category, price) {
+function createData(name, category, price, image) {
   return {
     name,
     category,
     price,
+    image
   };
 }
-
+/*
 const rows = []
 
 async function getProductsFunc(token) {
   try {
-    const res = await getProduct(token);
-    for (let i = 0; i < res.length; i++) {
-      console.log("producto", res[i].name)
-      rows.push(createData(res[i].name, res[i].type, res[i].price))
+    const { products } = await getDatabase(token);
+    for (let i = 0; i < products.length; i++) {
+      console.log("producto", products[i].name)
+      rows.push(createData(products[i].name, products[i].type, products[i].price))
     }
   } catch (error) {
     console.log("quie error", error)
   }
 }
-
+*/
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -86,7 +86,7 @@ const headCells = [
     label: 'Nombre Producto',
   },
   {
-    id: 'category',
+    id: 'type',
     numeric: false,
     disablePadding: true,
     label: 'Categoria',
@@ -94,10 +94,15 @@ const headCells = [
   {
     id: 'price',
     numeric: true,
-    disablePadding: false,
+    disablePadding: true,
     label: 'Precio',
   },
-
+  {
+    id: 'img',
+    numeric: false,
+    disablePadding: true,
+    label: '',
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -211,7 +216,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable({ token }) {
+export default function EnhancedTable() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('price');
   const [selected, setSelected] = React.useState([]);
@@ -219,7 +224,17 @@ export default function EnhancedTable({ token }) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  getProductsFunc(token)
+  const [rows, setRows] = React.useState([])
+
+  React.useEffect(async () => {
+    getDatabase()
+      .then(json => {
+        setRows(json.products);
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }, [])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -230,7 +245,6 @@ export default function EnhancedTable({ token }) {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => {
-
         return n.name
       });
       setSelected(newSelected);
@@ -338,7 +352,7 @@ export default function EnhancedTable({ token }) {
                     >
                       {row.name}
                     </TableCell>
-                    <TableCell align="right">{row.category}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
                     <TableCell align="right">{row.price}</TableCell>
                   </TableRow>
                 );
