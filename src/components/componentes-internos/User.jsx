@@ -29,35 +29,35 @@ const initialRows = [
   {
     id: randomId(),
     name: randomTraderName(),
-    price: '',
+    age: 25,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
   {
     id: randomId(),
     name: randomTraderName(),
-    price: '',
+    age: 36,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
   {
     id: randomId(),
     name: randomTraderName(),
-    price: '',
+    age: 19,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
   {
     id: randomId(),
     name: randomTraderName(),
-    price: '',
+    age: 28,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
   {
     id: randomId(),
     name: randomTraderName(),
-    price: '',
+    age: 23,
     joinDate: randomCreatedDate(),
     role: randomRole(),
   },
@@ -68,7 +68,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: '', price: '', isNew: true }]);
+    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -78,13 +78,13 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Crear Producto
+        Crear Usuario
       </Button>
     </GridToolbarContainer>
   );
 }
 
-export default function FullFeaturedCrudGrids() {
+export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
@@ -129,10 +129,10 @@ export default function FullFeaturedCrudGrids() {
   };
 
   const columns = [
-    { field: 'name', headerName: 'NOMBRE PRODUCTO', width: 180, editable: true },
+    { field: 'name', headerName: 'NOMBRE', width: 180, editable: true },
     {
-      field: 'price',
-      headerName: 'PRECIO',
+      field: 'age',
+      headerName: 'Age',
       type: 'number',
       width: 80,
       align: 'left',
@@ -148,11 +148,11 @@ export default function FullFeaturedCrudGrids() {
     },
     {
       field: 'role',
-      headerName: 'Categoria',
+      headerName: 'ROL',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: ['Hamburguesas', 'Bebidas'],
+      valueOptions: ['Market', 'Finance', 'Development'],
     },
     {
       field: 'actions',

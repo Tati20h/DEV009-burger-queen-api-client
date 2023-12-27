@@ -32,8 +32,8 @@ html {
 
 
 .btn {
-  font-size: 15px;
-  font-family: monospace;
+  font-size: 14px;
+  font-family: Inrian sans;
   width: 142px;
   background-color: #FF7511;
   height: 38px;
@@ -46,7 +46,6 @@ html {
   transition: 0.5s;
 }
 
-
 .container {
   width: 100%;
   background-color: #fff;
@@ -54,9 +53,6 @@ html {
   display: grid;
   grid-template-columns: 50% 50%;
 }
-
-
-
 
 .transition-div {
   height: 200%;
@@ -105,7 +101,7 @@ input {
 
 .bton {
   font-size: 15px;
-  font-family: monospace;
+  font-family: Inrian sans;
   width: 142px;
   background-color: #72cdfe;
   height: 38px;
@@ -128,7 +124,7 @@ input {
 }
 
 .row {
-  text-align: end;
+  text-align: center;
   color: #f5efef;
   font-family: monospace;
   background-image: url(./assets/img/alexander-startsev-ndNw_6QGR_c-unsplash.jpg);
@@ -138,24 +134,27 @@ input {
   align-items: center;
   opacity: 87%;
 }
-.adm{  
-  color: #951d1d;
-  font-family: monospace;
+
+.admi {
   text-align: center;
+  color: #090909;
+  font-family: monospace;
+  background-image: url(./assets/img/burger1.jpg);
+  background-size: 100% 100%;
+  display: grid;
+  justify-content: center;
+  opacity: 87%;
 
 }
 
-.btn-exit {
-  font-size: 15px;
+.adm {
+  text-align: center;
+  color: #050505;
   font-family: monospace;
-  width: 150px;
-  background-color: #5dc0e7;
-  height: 30px;
-  border-radius: 30px;
-  color: #fff;
-  text-transform: uppercase;
-  font-weight: 100;
-  margin: 10px 0;
-  cursor: pointer;
-  transition: 0.5s;
+  background-image: url(./assets/img/burger2.jpg);
+  background-size: 100% 100%;
+  display: grid;
+ justify-content: center;
+  opacity: 87%;
+
 }
